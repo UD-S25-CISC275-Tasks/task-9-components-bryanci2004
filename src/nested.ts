@@ -1,6 +1,6 @@
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
-import { makeBlankQuestion } from "./objects";
+import { duplicateQuestion, makeBlankQuestion } from "./objects";
 /**
  * Consumes an array of questions and returns a new array with only the questions
  * that are `published`.
@@ -287,8 +287,8 @@ export function duplicateQuestionInArray(
     return questions.flatMap((question: Question): Question[] => {
         if (question.id === targetId) {
             // Duplicate the question and assign the new ID
-            const duplicatedQuestion = { ...question, id: newId };
-            return [question, duplicatedQuestion]; // Insert duplicate after original
+            const duplicatedQuestion = { ...question, id: newId};
+            return [question, duplicateQuestion(duplicatedQuestion.id, duplicatedQuestion)]; // Insert duplicate after original
         }
         return [question]; // Keep other questions unchanged
     });
